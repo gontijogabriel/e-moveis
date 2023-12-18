@@ -1,0 +1,25 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ usuario.nome }}</title>
+</head>
+<body>
+    <h1>Perfil {{ user.imobiliaria.nome }}</h1>
+    <p>{{ usuario.telefone }}</p>
+    <p>{{ usuario.endereco }}</p>
+    <p>{{ usuario.perfil }}</p>
+    <a href="{% url 'adicionarAnuncioView' %}">Anunciar Imovel</a>
+    <div>
+        <img src="/media/perfil_imobiliaria/fotodeperfil.png" alt="Foto de Perfil" width="500px">
+    </div>
+    
+    {% if user.is_authenticated and request.path == '/perfil/'|add:user.imobiliaria.nome|add:'/' %}
+        <a href="{% url 'logoutView' %}">Logout</a>
+    {% endif %}
+
+</body>
+</html>

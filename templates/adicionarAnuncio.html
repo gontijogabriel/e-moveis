@@ -1,0 +1,104 @@
+<!-- templates/imoveis/adicionar_imovel.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar Imóvel</title>
+</head>
+<body>
+
+<h2>Adicionar Imóvel</h2>
+
+<form method="POST" enctype="multipart/form-data" action="{% url 'adicionarAnuncioView' %}">
+    {% csrf_token %}
+
+    <!-- Campos do modelo Imovel -->
+    <label for="imobiliaria">{{ user.imobiliaria.nome }}</label><br>
+
+    <label for="residencial">Residencial:</label>
+    <input type="text" name="residencial" id="residencial"><br>
+
+    <label for="cep">CEP:</label>
+    <input type="text" name="cep" id="cep"><br>
+
+    <label for="logradouro">Logradouro:</label>
+    <input type="text" name="logradouro" id="logradouro"><br>
+
+    <label for="bairro">Bairro:</label>
+    <input type="text" name="bairro" id="bairro"><br>
+
+    <label for="cidade">Cidade:</label>
+    <input type="text" name="cidade" id="cidade"><br>
+
+    <label for="estado">Estado:</label>
+    <input type="text" name="estado" id="estado"><br>
+
+    <label for="categoria">Categoria:</label>
+    <select name="categoria" id="categoria">
+        <option value="Casa">Casa</option>
+        <option value="Apartamento">Apartamento</option>
+        <option value="Comercial">Comercial</option>
+        <option value="Sala Comercial">Sala Comercial</option>
+    </select><br>
+
+    <label for="metros_quadrados">Metros Quadrados:</label>
+    <input type="number" name="metros_quadrados" id="metros_quadrados"><br>
+
+    <label for="quartos">Quartos:</label>
+    <input type="number" name="quartos" id="quartos"><br>
+
+    <label for="banheiros">Banheiros:</label>
+    <input type="number" name="banheiros" id="banheiros"><br>
+
+    <label for="vagas">Vagas:</label>
+    <input type="number" name="vagas" id="vagas"><br>
+
+    <label for="valor">Valor:</label>
+    <input type="text" name="valor" id="valor"><br>
+
+    <label for="aluguel">Aluguel:</label>
+    <input type="checkbox" name="aluguel" id="aluguel"><br>
+
+    <label for="temporada">Temporada:</label>
+    <input type="checkbox" name="temporada" id="temporada"><br>
+
+    <label for="descricao">Descrição:</label><br>
+    <textarea name="descricao" id="descricao" rows="4" cols="50"></textarea><br>
+
+    <!-- Campos do modelo FotosImoveis -->
+    <label for="foto">Foto:</label>
+    <input type="file" name="foto" id="foto" multiple><br>
+
+    <button type="submit">Adicionar Imóvel</button>
+</form>
+
+</body>
+<script>
+    function buscarCEP() {
+        var cep = document.getElementById('cep').value;
+
+        // Verificar se o CEP possui 8 dígitos
+        if (cep.length === 8) {
+            // Construir a URL de requisição
+            var url = 'https://viacep.com.br/ws/' + cep + '/json/';
+
+            // Fazer a requisição HTTP
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    // Preencher os campos do formulário com os dados do JSON
+                    document.getElementById('logradouro').value = data.logradouro || '';
+                    document.getElementById('bairro').value = data.bairro || '';
+                    document.getElementById('cidade').value = data.localidade || '';
+                    document.getElementById('estado').value = data.uf || '';
+                })
+                .catch(error => console.error('Erro ao buscar o CEP:', error));
+        }
+    }
+
+    // Adicionar um ouvinte de eventos para chamar a função quando o campo CEP perder o foco
+    document.getElementById('cep').addEventListener('blur', buscarCEP);
+</script>
+</html>
