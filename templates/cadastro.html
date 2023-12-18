@@ -1,16 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
-    <h2>Cadastrar Nova Imobiliária</h2>
+  </head>
+  <body>
+  <h2>Cadastrar Nova Imobiliária</h2>
     <form method="POST">
-      {% csrf_token %}
-      {{ form.as_p }}
+    {% csrf_token %}
+      <label for="username">Nome de Usuario:</label>
+      <input type="text" name="username" required />
+      <br />
+      <label for="email">Email:</label>
+      <input type="email" name="email" required />
+      <br />
+      <label for="password">Password:</label>
+      <input type="password" name="password" required />
+      <br />
+      <!-- Campos do modelo Imobiliaria -->
+      <label for="nome">Nome:</label>
+      <input type="text" name="nome" required />
+      <br />
+      <label for="telefone">Telefone:</label>
+      <input type="text" name="telefone" required />
+      <br />
+      <label for="email">Email:</label>
+      <input type="email" name="email" required />
+      <br />
+      <label for="endereco">Endereço:</label>
+      <input type="text" name="endereco" required />
+      <br />
+      <label for="perfil">Perfil:</label>
+      <input type="file" name="perfil" />
+      <br />
+      <label for="token">Token:</label>
+      <input type="text" name="token" />
+      <br />
+      <label for="token_date">Token Date:</label>
+      <input type="text" name="token_date" />
+      <br />
       <button type="submit">Cadastrar</button>
     </form>
-</body>
+  </body>
 </html>

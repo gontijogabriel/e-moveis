@@ -9,6 +9,7 @@ from django.conf import settings
 import random
 from django.contrib.auth.hashers import make_password
 from django.contrib import messages
+from django.contrib.auth.models import User
 
 def index(request):
     return render(request, 'index.html')
@@ -124,6 +125,7 @@ def redefinirPassword(request):
 
 def adicionarAnuncioView(request):
     if request.method == 'POST':
+        
 
         residencial = request.POST.get('residencial')
         cep = request.POST.get('cep')
@@ -168,17 +170,26 @@ def adicionarAnuncioView(request):
 
 
 
-
+###############
 
 def logoutView(request):
     logout(request)
     # messages.success(request, 'Você foi desconectado com sucesso.')
     return redirect('index')
 
-###############
 
 def cadastrar_imobiliaria(request):
-    #if request.method == 'POST':
-    return render(request, 'cadastro.html')
+    if request.method == 'POST':
+        # Obtenha os dados do POST
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
 
-##############
+        # Verificar se usuario ja existe
+        if User.objects.filter(username=username).exists():
+            # return render(request, 'cadastrar_usuario.html', {'error': 'Usuário já existe'})
+
+            return redirect('login')
+
+    return render(request, 'cadastrar_usuario.html', {'error': None})
+
