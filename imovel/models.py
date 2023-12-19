@@ -17,8 +17,7 @@ class Imovel(models.Model):
     banheiros = models.PositiveIntegerField(default=0, blank=True, null=True)
     vagas = models.PositiveIntegerField(default=0, blank=True, null=True)
     valor = models.DecimalField(max_digits=10, decimal_places=2)
-    aluguel = models.BooleanField(default=False)
-    temporada = models.BooleanField(default=False)
+    acao = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return f"{self.categoria} - {self.cidade}, {self.estado}"

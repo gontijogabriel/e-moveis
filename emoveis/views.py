@@ -125,7 +125,6 @@ def redefinirPassword(request):
 
 def adicionarAnuncioView(request):
     if request.method == 'POST':
-        
 
         residencial = request.POST.get('residencial')
         cep = request.POST.get('cep')
@@ -142,6 +141,7 @@ def adicionarAnuncioView(request):
         aluguel = request.POST.get('aluguel')
         temporada = request.POST.get('temporada')
         descricao = request.POST.get('descricao')
+        fotos = request.FILES.getlist('foto')
         
         print(f'residencial ==== {residencial}')
         print(f'cep ==== {cep}')
@@ -158,7 +158,10 @@ def adicionarAnuncioView(request):
         print(f'aluguel ==== {aluguel}')
         print(f'temporada ==== {temporada}')
         print(f'descricao ==== {descricao}')
+        print(f'descricao ==== {fotos}')
         
+        for x in fotos:
+            print(x)
         
         msg = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'        
         return render(request, 'adicionarAnuncio.html')
