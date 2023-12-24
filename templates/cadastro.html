@@ -16,8 +16,12 @@
       <input type="email" name="email" required />
       <br />
       <label for="password">Password:</label>
-      <input type="password" name="password" required />
+      <input type="password" name="password1" required />
       <br />
+      <label for="password">Password:</label>
+      <input type="password" name="password2" required />
+      <br />
+
       <!-- Campos do modelo Imobiliaria -->
       <label for="nome">Nome:</label>
       <input type="text" name="nome" required />
@@ -42,5 +46,8 @@
       <br />
       <button type="submit">Cadastrar</button>
     </form>
+    {% if msg %}
+      {{ msg }}
+    {% endif %}
   </body>
 </html>

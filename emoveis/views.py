@@ -167,9 +167,6 @@ def adicionarAnuncioView(request):
     return render(request, 'adicionarAnuncio.html')
 
 
-
-
-
 ###############
 
 def logoutView(request):
@@ -180,16 +177,42 @@ def logoutView(request):
 
 def cadastrar_imobiliaria(request):
     if request.method == 'POST':
-        # Obtenha os dados do POST
+        # Processar os dados do formulário
         username = request.POST.get('username')
         email = request.POST.get('email')
-        password = request.POST.get('password')
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+        nome = request.POST.get('nome')
+        telefone = request.POST.get('telefone')
+        endereco = request.POST.get('endereco')
+        perfil = request.FILES.get('perfil')
 
-        # Verificar se usuario ja existe
-        if User.objects.filter(username=username).exists():
-            # return render(request, 'cadastrar_usuario.html', {'error': 'Usuário já existe'})
+        # Verificar se o usuário já existe com o mesmo username ou email
+        if User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists():
+            return render(request, 'cadastro.html', {'msg': 'Nome de usuário ou email já em uso'})
+        
+        # Verificar se as senhas coincidem
+        if password1 != password2:
+            return render(request, 'cadastro.html', {'msg': 'As senhas não coincidem'})
 
-            return redirect('login')
+        # Criar novo usuário
+        user = User.objects.create_user(username=username, email=email, password=password1)
 
-    return render(request, 'cadastrar_usuario.html', {'error': None})
+        # Criar instância de Imobiliaria
+        imobiliaria = Imobiliaria(
+            user=user,
+            nome=nome,
+            telefone=telefone,
+            email=email,
+            endereco=endereco,
+            perfil=perfil
+        )
+
+        # Salvar a instância no banco de dados
+        imobiliaria.save()
+
+        # Redirecionar para a página desejada após o cadastro
+        return redirect('loginView')
+    
+    return render(request, 'cadastro.html', {'msg': None})
 
